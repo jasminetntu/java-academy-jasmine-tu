@@ -81,11 +81,13 @@ public class RentalCarCalculator {
 
     /**
      * Add up the total cost and print receipt of costs in the following format:
+     * For x day(s), picking up on mm/dd/yyyy...
      * Basic car rental price: $xx.xx
      * Additional options price: $xx.xx
      * Underage driver surcharge (<25 y/o): $xx.xx
      * Total cost: $xx.xx
      * @param numDays int
+     * @param pickupDate String
      * @param basicCarRentalCost double
      * @param optionsCost double
      * @param underageSurchargeCost double
