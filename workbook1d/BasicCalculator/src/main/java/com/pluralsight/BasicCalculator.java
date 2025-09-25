@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.util.Scanner;
 
+//exercise 3
 public class BasicCalculator {
     public static void main(String[] args) {
         Scanner scnr = new Scanner(System.in);
