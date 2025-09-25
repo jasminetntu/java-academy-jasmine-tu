@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+//exercise 1
 public class Receipt {
     public static void main(String[] args) {
         String itemName = "Nee Doh Nice Cube";

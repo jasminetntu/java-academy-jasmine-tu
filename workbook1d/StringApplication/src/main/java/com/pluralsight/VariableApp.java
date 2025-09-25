@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+//exercise 1
 public class VariableApp {
     public static void main(String[] args) {
         // Step 1:

@@ -1,7 +1,6 @@
 package com.pluralsight;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+//exercise 2
 public class MathApp {
     public static void main(String[] args) {
         //question 1 - salaries, find max
