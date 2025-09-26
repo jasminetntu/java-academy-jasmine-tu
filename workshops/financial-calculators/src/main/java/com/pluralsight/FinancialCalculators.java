@@ -64,16 +64,16 @@ public class FinancialCalculators {
      * where P = principal, i = monthly interest rate, n = number of monthly payments
      *
      * Prints information in the following format:
-     * A $x.xx loan at x% interest for x years
+     * A $x.xx loan at x.xxxx% interest for x years
      * would have a $x.xx/mo payment with a total interest of $x.xx.
      *
      * @param scnr Scanner object
      */
     public void mortgageCalculator(Scanner scnr) {
-        //System.out.println("Test: Mortgage Calculator");
+        System.out.println("\n*** Mortgage Calculator ***");
 
         //get inputs
-        System.out.print("\nEnter principal (loan value): ");
+        System.out.print("Enter principal (loan value, w/o symbols): ");
         double principal = scnr.nextDouble();
         System.out.print("Enter annual interest rate (in decimal form; ex: 5% -> 0.05): ");
         double annualInterestRate = scnr.nextDouble();
@@ -101,22 +101,22 @@ public class FinancialCalculators {
     }
 
     /**
-     * Calculates and prints monthly payment & total interest of a mortgage.
+     * Calculates and prints future value & total interest of a CD given a one-time deposit.
      * Takes principal/deposit, annual interest rate (decimal), and length of cd (yrs) as inputs.
      * Using the formula: FV = P × (1 + (r / 365) )^(365 × t)
      * where P = principal/deposit, r = annual interest rate, t = number of years
      *
      * Prints information in the following format:
-     * If you deposit $x.xx in a CD that earns x% annual interest and matures in x years,
+     * If you deposit $x.xx in a CD that earns x.xxxx% annual interest and matures in x years,
      * your CD's ending balance will be $x.xx, and you would have earned $x.xx in interest.
      *
      * @param scnr Scanner object
      */
     public void cdCalculator(Scanner scnr) {
-        //System.out.println("Test: CD Calculator");
+        System.out.println("\n*** CD Future Value Calculator ***");
 
         //get inputs
-        System.out.print("\nEnter principal/initial deposit (w/o symbols): ");
+        System.out.print("Enter principal/initial deposit (w/o symbols): ");
         double principal = scnr.nextDouble();
         System.out.print("Enter annual interest rate (in decimal form; ex: 5% -> 0.05): ");
         double annualInterestRate = scnr.nextDouble();
@@ -136,9 +136,40 @@ public class FinancialCalculators {
                 futureValue, totalInterest);
     }
 
+    /**
+     * Calculates and prints present value of an ordinary annuity.
+     * Takes monthly payout, annual interest rate (decimal), and number os years to pay out.
+     * Using the formula: PV = C * [( 1 - (1 + r/n)^(-nt) ) / (r/n)]
+     * where C = cash flow (monthly payouts), r = annual interest rate, t = number of years to pay out, n = 12 (months in year)
+     *
+     * Prints information in the following format:
+     * To fund an annuity that pays $x.xx monthly for x years and earns an expected x.xxxx% interest,
+     * you would need to invest $x.xx today.
+     *
+     * @param scnr Scanner object
+     */
     public void annuityCalculator(Scanner scnr) {
-        //System.out.println("Test: Annuity Calculator");
+        System.out.println("\n*** Ordinary Annuity Present Value Calculator ***");
 
+        //get inputs
+        System.out.print("Enter monthly payout (w/o symbols): ");
+        double monthlyPayout = scnr.nextDouble();
+        System.out.print("Enter expected annual interest rate (in decimal form; ex: 5% -> 0.05): ");
+        double annualInterestRate = scnr.nextDouble();
+        System.out.print("Enter number of years to pay out" +
+                "\n(aka how long you want to receive monthly payments): ");
+        int numYears = scnr.nextInt();
+        scnr.nextLine(); //consume leftover CRLF
 
+        //calculate present value
+        double presentValue = monthlyPayout * (
+                (1 - Math.pow(1 + annualInterestRate / 12, -12 * numYears))
+                / (annualInterestRate / 12));
+
+        //print information
+        System.out.printf("\nTo fund an annuity that pays $%.2f monthly for " + numYears + " years "
+                + "and earns an expected %.4f", monthlyPayout, annualInterestRate * 100);
+        System.out.println("% interest,");
+        System.out.printf("you would need to invest $%.2f today.\n", presentValue);
     }
 }
