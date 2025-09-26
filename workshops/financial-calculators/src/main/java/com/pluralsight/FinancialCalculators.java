@@ -24,10 +24,10 @@ public class FinancialCalculators {
                 finCalc.mortgageCalculator(scnr);
             }
             else if (choice.equals("2")) { //cd calc
-//                finCalc.cdCalculator();
+                finCalc.cdCalculator(scnr);
             }
             else if (choice.equals("3")) { //annuity calc
-//                finCalc.annuityCalculator();
+                finCalc.annuityCalculator(scnr);
             }
             else if (!choice.equalsIgnoreCase("x")) { //invalid choice
                 System.out.println("Invalid choice. Please try again.");
@@ -51,7 +51,7 @@ public class FinancialCalculators {
                 \n---------------------------------------------------------------------
                 What calculator would you like to use?
                     1. Mortgage Calculator - Find Monthly Payment & Interest
-                    2. CD Calculator - Find Future Value of Your CD
+                    2. CD Calculator - Find Future Value of Your CD's One-Time Deposit
                     3. Annuity Calculator - Find Present Value of an Ordinary Annuity
                     X. Exit
                 Enter your choice (1, 2, 3, or X):\s""");
@@ -94,17 +94,51 @@ public class FinancialCalculators {
         double totalInterest = (monthlyPayment * numMonths) - principal;
 
         //print result
-        System.out.printf("\nA $%.2f loan ", principal);
-        System.out.print("at " + (annualInterestRate * 100) + "% annual interest for " + numYears + " years");
-        System.out.printf("\nwould have a $%.2f/mo payment with a total interest of $%.2f.\n",
+        System.out.printf("\nA $%.2f loan at %.4f", principal, annualInterestRate * 100);
+        System.out.println("% annual interest for " + numYears + " years");
+        System.out.printf("would have a $%.2f/mo payment with a total interest of $%.2f.\n",
                 monthlyPayment, totalInterest);
     }
 
-    public void cdCalculator() {
+    /**
+     * Calculates and prints monthly payment & total interest of a mortgage.
+     * Takes principal/deposit, annual interest rate (decimal), and length of cd (yrs) as inputs.
+     * Using the formula: FV = P × (1 + (r / 365) )^(365 × t)
+     * where P = principal/deposit, r = annual interest rate, t = number of years
+     *
+     * Prints information in the following format:
+     * If you deposit $x.xx in a CD that earns x% annual interest and matures in x years,
+     * your CD's ending balance will be $x.xx, and you would have earned $x.xx in interest.
+     *
+     * @param scnr Scanner object
+     */
+    public void cdCalculator(Scanner scnr) {
         //System.out.println("Test: CD Calculator");
+
+        //get inputs
+        System.out.print("\nEnter principal/initial deposit (w/o symbols): ");
+        double principal = scnr.nextDouble();
+        System.out.print("Enter annual interest rate (in decimal form; ex: 5% -> 0.05): ");
+        double annualInterestRate = scnr.nextDouble();
+        System.out.print("Enter number of years that CD will mature: ");
+        int numYears = scnr.nextInt();
+        scnr.nextLine(); //consume leftover CRLF
+
+        //calculate future value and total interest
+        double futureValue = principal *
+                Math.pow(1 + (annualInterestRate / 365), 365 * numYears);
+        double totalInterest = futureValue - principal;
+
+        //print information
+        System.out.printf("\nIf you deposit $%.2f in a CD that earns %.4f", principal, annualInterestRate * 100);
+        System.out.println("% annual interest and matures in " + numYears + " years,");
+        System.out.printf("your CD's ending balance will be $%.2f, and you would have earned $%.2f in interest.\n",
+                futureValue, totalInterest);
     }
 
-    public void annuityCalculator() {
+    public void annuityCalculator(Scanner scnr) {
         //System.out.println("Test: Annuity Calculator");
+
+
     }
 }
