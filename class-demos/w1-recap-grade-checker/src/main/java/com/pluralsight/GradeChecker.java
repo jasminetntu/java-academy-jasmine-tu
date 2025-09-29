@@ -36,5 +36,7 @@ public class GradeChecker {
         }
 
         System.out.println("Your letter grade is " + letterGrade + ".");
+
+        scnr.close();
     }
 }
