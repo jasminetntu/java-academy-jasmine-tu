@@ -23,5 +23,7 @@ public class FullNameParser {
         }
 
         System.out.println("\nLast name: " + name_arr[name_arr.length - 1]);
+
+        scnr.close();
     }
 }
