@@ -7,26 +7,28 @@ public class GradeChecker {
         Scanner scnr = new Scanner(System.in);
         System.out.println("Welcome to Grade Checker!");
 
-        char letterGrade = ' ';
+        String letterGrade = "";
         boolean isValid = false;
 
         while (!isValid) {
             System.out.print("\nEnter your exam score (0-100): ");
             double examScore = scnr.nextDouble();
 
-            if (examScore > 100 || examScore < 0) {
+            if (examScore < 0) {
                 System.out.println("Invalid grade.");
             } else {
-                if (examScore >= 90) {
-                    letterGrade = 'A';
+                if (examScore > 100) {
+                    letterGrade = "A+"; //extra credit
+                } else if (examScore >= 90) {
+                    letterGrade = "A";
                 } else if (examScore >= 80) {
-                    letterGrade = 'B';
+                    letterGrade = "B";
                 } else if (examScore >= 70) {
-                    letterGrade = 'C';
+                    letterGrade = "C";
                 } else if (examScore >= 60) {
-                    letterGrade = 'D';
+                    letterGrade = "D";
                 } else {
-                    letterGrade = 'F';
+                    letterGrade = "F";
                 }
 
                 isValid = true;
