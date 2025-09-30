@@ -42,16 +42,15 @@ public class LoopPractice {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
             j--;
         }
         System.out.println("Time's up!");
 
         //exercise 3 - input until exit
         System.out.println("\nDo...While Loop: Run at least once");
-
         Scanner scnr = new Scanner(System.in);
         String input;
+        
         do {
             System.out.print("Enter some input or type 'exit': ");
             input = scnr.nextLine().trim();
