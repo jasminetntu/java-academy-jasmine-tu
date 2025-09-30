@@ -4,45 +4,43 @@ import java.util.Scanner;
 
 public class AddressBuilder {
     public static void main(String[] args) {
-        //Please provide the following information:
-        //Full name: Grover Smith
-        //Billing Street: 123 Main Street
-        //Billing City: Middleton
-        //Billing State: TX
-        //Billing Zip: 75111
-        //Shipping Street: 456 Big Sky Blvd
-        //Shipping City: Outer Rim
-        //Shipping State: TX
-        //Shipping Zip: 75333
-
         Scanner scnr = new Scanner(System.in);
         StringBuilder address = new StringBuilder();
 
-        System.out.println("*** Address Builder ***" +
-                "\n\n--- Please provide the following information:");
+        //title
+        System.out.println("""
+                *** Address Builder ***
+                
+                --- Please provide the following information:""");
 
+        //get inputs & build string
         System.out.print("Full name: ");
-        address.append(scnr.nextLine() + "\n\nBilling Address:\n");
+        address.append(scnr.nextLine()).append("\n\nBilling Address:\n");
 
+        //billing address
         System.out.print("\nBilling Street: ");
-        address.append(scnr.nextLine().trim() + "\n");
+        address.append(scnr.nextLine().trim()).append("\n");
         System.out.print("Billing City: ");
-        address.append(scnr.nextLine().trim() + ", ");
+        address.append(scnr.nextLine().trim()).append(", ");
         System.out.print("Billing State: ");
-        address.append(scnr.nextLine().trim() + " ");
+        address.append(scnr.nextLine().trim()).append(" ");
         System.out.print("Billing Zip: ");
-        address.append(scnr.nextLine().trim() + "\n\nShipping Address:\n");
+        address.append(scnr.nextLine().trim()).append("\n\nShipping Address:\n");
 
+        //shipping address
         System.out.print("\nShipping Street: ");
-        address.append(scnr.nextLine().trim() + "\n");
+        address.append(scnr.nextLine().trim()).append("\n");
         System.out.print("Shipping City: ");
-        address.append(scnr.nextLine().trim() + ", ");
+        address.append(scnr.nextLine().trim()).append(", ");
         System.out.print("Shipping State: ");
-        address.append(scnr.nextLine().trim() + " ");
+        address.append(scnr.nextLine().trim()).append(" ");
         System.out.print("Shipping Zip: ");
         address.append(scnr.nextLine().trim());
 
-        System.out.println("\n--- Customer Information:\n" + address.toString());
+        //print
+        System.out.println("\n--- Customer Information:\n" + address);
+
+        //NOTE: toString() is unnecessary in print statements or w/ concatenation bc java does it implicitly
 
     }
 }
