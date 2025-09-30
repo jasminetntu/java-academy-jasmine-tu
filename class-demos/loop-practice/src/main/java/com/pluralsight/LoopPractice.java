@@ -35,7 +35,7 @@ public class LoopPractice {
         System.out.println("\nWhile Loop: Counting down from 5");
         int j = 5;
         while (j > 0) {
-            System.out.println("Countdown: " + j + " s");
+            System.out.println("Countdown: " + j + "...");
 
             try {
                 Thread.sleep(1000);
@@ -45,6 +45,7 @@ public class LoopPractice {
 
             j--;
         }
+        System.out.println("Time's up!");
 
         //exercise 3 - input until exit
         System.out.println("\nDo...While Loop: Run at least once");
@@ -53,7 +54,7 @@ public class LoopPractice {
         String input;
         do {
             System.out.print("Enter some input or type 'exit': ");
-            input = scnr.nextLine();
+            input = scnr.nextLine().trim();
         } while (!input.equalsIgnoreCase("exit"));
 
 
