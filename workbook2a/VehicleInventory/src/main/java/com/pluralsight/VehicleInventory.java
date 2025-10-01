@@ -60,7 +60,8 @@ public class VehicleInventory {
                     findVehiclesByColor(vehicles, totVehicles, color);
                     break;
                 case "5":
-                    addAVehicle(vehicles, totVehicles);
+                    addAVehicle(vehicles, totVehicles, scnr);
+                    ++totVehicles;
                     break;
                 case "6": //quit
                     System.out.println("Thank you! Goodbye.");
@@ -70,6 +71,7 @@ public class VehicleInventory {
             }
         } while (!choice.equals("6"));
 
+        scnr.close();
     }
 
     public static void printMenu() {
@@ -140,7 +142,20 @@ public class VehicleInventory {
         }
     }
 
-    public static void addAVehicle(Vehicle[] vehicles, int totVehicles) {
+    public static void addAVehicle(Vehicle[] vehicles, int currIndex, Scanner scnr) {
+        System.out.print("\nPlease provide the following:\nVehicle Id: ");
+        long vehicleId = scnr.nextLong();
+        scnr.nextLine(); //eat crlf
+        System.out.print("Make Model: ");
+        String makeModel = scnr.nextLine();
+        System.out.print("Color: ");
+        String color = scnr.nextLine();
+        System.out.print("Odometer Reading: ");
+        int odometerReading = scnr.nextInt();
+        System.out.print("Price: ");
+        float price = scnr.nextFloat();
+        scnr.nextLine(); //eat crlf
 
+        vehicles[currIndex] = new Vehicle(vehicleId, makeModel, color, odometerReading, price);
     }
 }
