@@ -65,4 +65,9 @@ public class Vehicle {
     public void setPrice(float price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s | ID %d | %d miles | $%.2f", color, makeModel, vehicleId, odometerReading, price);
+    }
 }
