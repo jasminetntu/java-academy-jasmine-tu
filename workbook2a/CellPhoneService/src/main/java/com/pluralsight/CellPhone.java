@@ -7,12 +7,22 @@ public class CellPhone {
     private String phoneNumber;
     private String owner;
 
+    // *** Constructors ***
+
     public CellPhone() {
         serialNumber = 0;
         model = "";
         carrier = "";
         phoneNumber = "";
         owner = "";
+    }
+
+    public CellPhone(int serialNumber, String model, String carrier, String phoneNumber, String owner) {
+        this.serialNumber = serialNumber;
+        this.model = model;
+        this.carrier = carrier;
+        this.phoneNumber = phoneNumber;
+        this.owner = owner;
     }
 
     // *** Getter Methods ***
@@ -57,6 +67,12 @@ public class CellPhone {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    // *** Other Methods ***
+
+    public void dial(String numberToCall) {
+        System.out.printf("\n%s's phone is calling %s.\n", owner, numberToCall);
     }
 
 }
