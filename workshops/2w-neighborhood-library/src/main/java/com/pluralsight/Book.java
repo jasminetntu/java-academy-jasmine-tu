@@ -1,0 +1,72 @@
+package com.pluralsight;
+
+public class Book {
+    private int id;
+    private String isbn;
+    private String title;
+    private boolean isCheckedOut;
+    private String checkedOutTo;
+
+    // *** Constructors ***
+    public Book() {
+        this.id = 0;
+        this.isbn = "";
+        this.title = "";
+        this.isCheckedOut = false;
+        this.checkedOutTo = "";
+    }
+
+    public Book(int id, String isbn, String title) {
+        this();
+        this.id = id;
+        this.isbn = isbn;
+        this.title = title;
+    }
+
+    // *** Getters ***
+    public int getId() {
+        return id;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public boolean isCheckedOut() {
+        return isCheckedOut;
+    }
+
+    public String getCheckedOutTo() {
+        return checkedOutTo;
+    }
+
+    // *** Setters ***
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    // *** Other ***
+    public void checkOut(String name) {
+        isCheckedOut = true;
+        checkedOutTo = name;
+        System.out.printf("%s has been checked out to %s.\n", this.title, name);
+    }
+
+    public void checkIn() {
+        isCheckedOut = false;
+        checkedOutTo = "";
+        System.out.println(this.title + " has been checked in.");
+    }
+}
