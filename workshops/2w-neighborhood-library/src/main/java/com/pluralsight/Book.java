@@ -69,4 +69,22 @@ public class Book {
         checkedOutTo = "";
         System.out.println(this.title + " has been checked in.");
     }
+
+    @Override
+    public String toString() {
+        //if unavailable
+        if (isCheckedOut) {
+            return String.format("""
+                    %s
+                        ID: %d
+                        ISBN: %s
+                        Checked out to: %s""", title, id, isbn, checkedOutTo);
+        }
+        //if available
+        return String.format("""
+                    %s
+                        ID: %d
+                        ISBN: %s""", title, id, isbn);
+
+    }
 }
