@@ -1,4 +1,7 @@
 /**
+ * Neighborhood Library
+ * Workshop 2w
+ * 10/03/2025
  * @author Jasmine Tu
  */
 package com.pluralsight;
@@ -17,26 +20,28 @@ public class NeighborhoodLibrary {
             printHomeScreen();
             choice = scnr.nextLine();
 
-            switch (choice) {
+            switch (choice) { //available books
                 case "1":
                     showAvailableBooks(scnr, library);
                     break;
-                case "2":
-                    showUnavailableBooks(scnr, library);
+                case "2": //checked out books
+                    showCheckedOutBooks(scnr, library);
                     break;
-                case "x":
+                case "x": //exits loop
                     System.out.println("Thank you for visiting! Keep reading. :)");
                     break;
-                default:
+                default: //invalid choice
                     System.out.println("Invalid choice. Please try again.");
             }
-
-
         }
 
         scnr.close();
     }
 
+    /**
+     * Initializes an array of 20 Books.
+     * @return an array of Books
+     */
     public static Book[] initializeLibrary() {
         return new Book[] {
                 //20 books -> id, isbn, title
@@ -63,6 +68,9 @@ public class NeighborhoodLibrary {
         };
     }
 
+    /**
+     * Prints home screen with list of options/actions.
+     */
     public static void printHomeScreen() {
         System.out.print("""
                 \n--------------------------------
@@ -73,6 +81,13 @@ public class NeighborhoodLibrary {
                 Enter choice (1, 2, X):\s""");
     }
 
+    /**
+     * Displays list of all books (ID, ISBN, Title) that are not checked out.
+     * Prompts user check out book w/ ID or return to home screen.
+     * If user wants to check out book, prompts for name then checks out book.
+     * @param scnr Scanner object
+     * @param library array of Books
+     */
     public static void showAvailableBooks(Scanner scnr, Book[] library) {
         //print available books
         System.out.println("\n----- Available Books -----");
@@ -118,7 +133,14 @@ public class NeighborhoodLibrary {
         }
     }
 
-    public static void showUnavailableBooks(Scanner scnr, Book[] library) {
+    /**
+     * Displays list of all books (ID, ISBN, Title, Name of Lendee) that are checked out.
+     * Prompts user to choose to check in book or return to home screen.
+     * If user wants to check in, prompts for ID of book then checks in book.
+     * @param scnr Scanner object
+     * @param library array of Books
+     */
+    public static void showCheckedOutBooks(Scanner scnr, Book[] library) {
         //print unavailable books
         System.out.println("\n----- Checked Out Books -----");
         for (Book book : library) {
@@ -167,27 +189,3 @@ public class NeighborhoodLibrary {
     }
 
 }
-
-//The Store Home Screen - The home screen should display a list of options
-//that a user can choose from.
-//o Show Available Books
-//o Show Checked Out Books
-//o Exit - closes out of the application
-
-//• Show Available Books - Displays a list of all books that are not currently
-//checked out. Display the Id, ISBN and Title of the book.
-//o Prompt the user to either select a book to check out, or exit to go back
-//to the home screen
-//o If the user wants to check out a book, prompt them for their name
-//o Then check out the book
-
-//• Show Checked Out books - This displays a list of all the books that are
-//currently checked out. Display the Id, ISBN, Title and Name of the person
-//who has the book checked out. Prompt the user to
-//o C - to Check In a book
-//o X - to go back to the home screen
-
-//• Check In a book - Prompt the user for the ID of the book they want to
-//check in.
-//o Check in the book with the specified id
-//o Go back to the home screen

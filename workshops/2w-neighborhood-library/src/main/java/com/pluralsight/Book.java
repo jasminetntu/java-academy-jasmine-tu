@@ -58,12 +58,20 @@ public class Book {
     }
 
     // *** Other ***
+
+    /**
+     * Checks out book and adds lendee name. Confirms check out.
+     * @param name
+     */
     public void checkOut(String name) {
         isCheckedOut = true;
         checkedOutTo = name;
         System.out.printf("%s has been checked out to %s.\n", this.title, name);
     }
 
+    /**
+     * Checks in a book and clears lendee name. Confirms check in.
+     */
     public void checkIn() {
         isCheckedOut = false;
         checkedOutTo = "";
