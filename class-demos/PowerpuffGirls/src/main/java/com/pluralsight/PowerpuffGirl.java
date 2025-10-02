@@ -5,7 +5,7 @@ public class PowerpuffGirl {
     private String outfitColor;
     private int health;
     private int attackDamage;
-    public int powerUp;
+    private int powerUp;
 
     // *** Constructors ***
     public PowerpuffGirl() {
@@ -23,6 +23,7 @@ public class PowerpuffGirl {
     }
 
     public PowerpuffGirl(String name, String outfitColor, int attackDamage, int powerUp) {
+        this();
         this.name = name;
         this.outfitColor = outfitColor;
         this.attackDamage = attackDamage;
