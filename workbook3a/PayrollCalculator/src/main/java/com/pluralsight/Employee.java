@@ -47,4 +47,20 @@ public class Employee {
     public void setPayRate(double payRate) {
         this.payRate = payRate;
     }
+
+    // *** Other ***
+    public double getGrossPay() {
+        return hoursWorked * payRate;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("""
+                    --------------------
+                    Employee %d
+                    Name: %s
+                    Hours worked: %.2f
+                    Pay rate: $%.2f
+                    Gross pay: $%.2f""", employeeId, name, hoursWorked, payRate, getGrossPay());
+    }
 }
