@@ -15,6 +15,17 @@ public class FormatDates {
         formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         System.out.println(formatter.format(currDate));
 
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        System.out.println(formatter.format(currDate));
+
+        formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+        System.out.println(formatter.format(currDate));
+
+        formatter = DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy");
+        System.out.println(formatter.format(currDate) + " " + currTime);
+
+
+
 
 
 
