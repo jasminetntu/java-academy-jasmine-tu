@@ -53,6 +53,7 @@ public class Employee {
         return hoursWorked * payRate;
     }
 
+    // *** To String Methods ***
     @Override
     public String toString() {
         return String.format("""
@@ -62,5 +63,14 @@ public class Employee {
                     Hours worked: %.2f
                     Pay rate: $%.2f
                     Gross pay: $%.2f""", employeeId, name, hoursWorked, payRate, getGrossPay());
+    }
+
+    public String toCsvString() {
+        return String.format("%d|%s|%.2f", employeeId, name, getGrossPay());
+    }
+
+    public String toJsonString() {
+        return String.format("\t{ \"id\": %d, \"name\": \"%s\", \"grossPay\": %.2f}",
+                employeeId, name, getGrossPay());
     }
 }
