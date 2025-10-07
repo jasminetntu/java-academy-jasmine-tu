@@ -3,7 +3,7 @@ package com.pluralsight;
 import java.util.Scanner;
 import java.io.*;
 
-public class PayrollCalculator {
+public class OldPayrollCalculator {
     public static void main(String[] args) throws IOException {
         Scanner scnr = new Scanner(System.in);
 
@@ -16,7 +16,7 @@ public class PayrollCalculator {
 
         //get file to create
         String fileToCreate = getNameOfFileToCreate(scnr);
-        BufferedWriter bufWriter =  new BufferedWriter(new FileWriter(FILE_PATH + fileToCreate));
+        BufferedWriter bufWriter =  new BufferedWriter(new FileWriter("data/" + fileToCreate));
         boolean isCSV = fileToCreate.endsWith(".csv");
 
         //write to file
