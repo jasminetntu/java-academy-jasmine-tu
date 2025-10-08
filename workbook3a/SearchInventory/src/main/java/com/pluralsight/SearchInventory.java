@@ -10,7 +10,6 @@ public class SearchInventory {
         System.out.print("*** Search Inventory Application ***");
 
         ArrayList<Product> inventory = getInventory();
-        Collections.sort(inventory, Comparator.comparing(Product::getName));
 
         String choice;
 
@@ -36,7 +35,7 @@ public class SearchInventory {
                     printProductInPriceRange(scnr, inventory);
                     break;
                 case "4": //add new product
-
+                    addNewProduct(scnr, inventory);
                     break;
                 case "5": //exit
                     System.out.println("\n*** Thank you! ***");
@@ -95,9 +94,11 @@ public class SearchInventory {
     }
 
     public static void printInventory(ArrayList<Product> inventory) {
+        Collections.sort(inventory, Comparator.comparing(Product::getName));
+
         System.out.println("\n*** Current Inventory ***");
-        for (int i = 0; i < inventory.size(); i++) {
-            System.out.println(inventory.get(i));
+        for (Product product : inventory) {
+            System.out.println(product);
         }
     }
 
@@ -107,8 +108,8 @@ public class SearchInventory {
 
         while (!isValid) { //loops while input = non-integer
             try {
-                System.out.print("\nEnter ID of desired product: ");
-                id = Integer.parseInt(scnr.nextLine());
+                System.out.print("\nEnter 4-digit ID of desired product: ");
+                id = Integer.parseInt(scnr.nextLine().trim());
 
                 isValid = true;
             } catch (Exception e) {
@@ -135,9 +136,9 @@ public class SearchInventory {
         while (!isValid) {
             try {
                 System.out.print("\nEnter minimum price: ");
-                minPrice = Double.parseDouble(scnr.nextLine());
+                minPrice = Double.parseDouble(scnr.nextLine().trim());
                 System.out.print("Enter maximum price: ");
-                maxPrice = Double.parseDouble(scnr.nextLine());
+                maxPrice = Double.parseDouble(scnr.nextLine().trim());
 
                 if (minPrice < 0 || maxPrice < 0) {
                     System.out.println("Invalid input.");
@@ -164,5 +165,47 @@ public class SearchInventory {
             System.out.println("No products found in price range.");
         }
 
+    }
+
+    public static void addNewProduct(Scanner scnr, ArrayList<Product> inventory) {
+        boolean isValid = false;
+        int id = -1;
+        String name = "";
+        double price = -1;
+
+        //loop while user inputs invalid values
+        while (!isValid) {
+            try {
+                //get id
+                System.out.print("\nEnter 4-digit ID of product: ");
+                id = Integer.parseInt(scnr.nextLine().trim());
+
+                if (id > 9999 || id < 0) { //check if id is positive 4-digit number
+                    System.out.println("Not a valid ID!");
+                }
+                else {
+                    //get name
+                    System.out.print("Enter name of product: ");
+                    name = scnr.nextLine().trim();
+
+                    //get price
+                    System.out.print("Enter price of product: ");
+                    price = Double.parseDouble(scnr.nextLine().trim());
+
+                    if (price < 0) { //check if price is negative
+                        System.out.println("Not a valid price!");
+                    }
+                    else {
+                        isValid = true;
+                    }
+                }
+            }
+            catch (Exception e) { // wrong data type inputs
+                System.out.println("Invalid input. Please try again.");
+            }
+        }
+
+        inventory.add(new Product(id, name, price));
+        System.out.printf("\n*** \"%s\" was successfully added to the inventory! ***\n", name);
     }
 }
