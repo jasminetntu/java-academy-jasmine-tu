@@ -33,18 +33,19 @@ public class SearchInventory {
                     }
                     break;
                 case "3": //find all products within price range
+                    printProductInPriceRange(scnr, inventory);
                     break;
                 case "4": //add new product
+
                     break;
                 case "5": //exit
+                    System.out.println("\n*** Thank you! ***");
                     break;
                 default: //invalid
                     System.out.println("Invalid input. Please try agin.");
             }
 
         } while (!choice.equals("5"));
-
-        System.out.println("\n*** Thank you! ***");
 
         scnr.close();
     }
@@ -121,7 +122,47 @@ public class SearchInventory {
                 return product;
             }
         }
-
         return null; //return null if not found
+    }
+
+    public static void printProductInPriceRange(Scanner scnr, ArrayList<Product> inventory) {
+        boolean isValid = false;
+        double minPrice = 0;
+        double maxPrice = 0;
+        int count = 0;
+
+        //loops while input = non-double
+        while (!isValid) {
+            try {
+                System.out.print("\nEnter minimum price: ");
+                minPrice = Double.parseDouble(scnr.nextLine());
+                System.out.print("Enter maximum price: ");
+                maxPrice = Double.parseDouble(scnr.nextLine());
+
+                if (minPrice < 0 || maxPrice < 0) {
+                    System.out.println("Invalid input.");
+                }
+                else {
+                    isValid = true;
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Invalid input.");
+            }
+        }
+
+        //find and print products
+        System.out.printf("\n*** Products in Range $%.2f - $%.2f ***\n", minPrice, maxPrice);
+        for (Product product : inventory) {
+            if (product.getPrice() > minPrice && product.getPrice() < maxPrice) {
+                count++;
+                System.out.println("(" + count + ") " + product);
+            }
+        }
+
+        if (count == 0) {
+            System.out.println("No products found in price range.");
+        }
+
     }
 }
