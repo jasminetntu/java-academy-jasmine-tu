@@ -1,14 +1,18 @@
 package com.pluralsight;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.io.*;
 import java.net.URL;
+import java.util.Collections;
 
 public class SearchInventory {
     public static void main(String[] args) throws IOException {
         ArrayList<Product> inventory = getInventory();
         Scanner scnr = new Scanner(System.in);
+
+        Collections.sort(inventory, Comparator.comparing(Product::getName));
 
         System.out.println("We carry the following inventory: ");
         for (int i = 0; i < inventory.size(); i++) {
