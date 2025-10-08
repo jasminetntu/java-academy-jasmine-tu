@@ -1,25 +1,50 @@
 package com.pluralsight;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 import java.io.*;
 import java.net.URL;
-import java.util.Collections;
 
 public class SearchInventory {
     public static void main(String[] args) throws IOException {
-        ArrayList<Product> inventory = getInventory();
         Scanner scnr = new Scanner(System.in);
+        System.out.print("*** Search Inventory Application ***");
 
+        ArrayList<Product> inventory = getInventory();
         Collections.sort(inventory, Comparator.comparing(Product::getName));
 
-        System.out.println("We carry the following inventory: ");
-        for (int i = 0; i < inventory.size(); i++) {
-            Product p = inventory.get(i);
-            System.out.printf("id: %d, %s - Price: $%.2f\n",
-                    p.getId(), p.getName(), p.getPrice());
-        }
+        String choice;
+
+        do {
+            printMenu();
+            choice = scnr.nextLine();
+
+            switch (choice) {
+                case "1": //list all products
+                    printInventory(inventory);
+                    break;
+                case "2": //lookup product by id
+                    Product productToFind = lookupProductById(scnr, inventory);
+
+                    if (productToFind == null) {
+                        System.out.println("Product not found.");
+                    }
+                    else {
+                        System.out.println("Found Product - " + productToFind);
+                    }
+                    break;
+                case "3": //find all products within price range
+                    break;
+                case "4": //add new product
+                    break;
+                case "5": //exit
+                    break;
+                default: //invalid
+                    System.out.println("Invalid input. Please try agin.");
+            }
+
+        } while (!choice.equals("5"));
+
+        System.out.println("\n*** Thank you! ***");
 
         scnr.close();
     }
@@ -54,5 +79,49 @@ public class SearchInventory {
 //        inventory.add(new Product(4, "Cuties", 5.99));
 //        inventory.add(new Product(5, "24K Golden Labubu", 99.99));
         return inventory;
+    }
+
+    public static void printMenu() {
+        System.out.print("""
+                \n-------------------------------------------------
+                What would you like to do?
+                    1. List all products
+                    2. Lookup a product by its id
+                    3. Find all products within a price range
+                    4. Add a new product
+                    5. Quit the application
+                Enter choice (1-5):\s""");
+    }
+
+    public static void printInventory(ArrayList<Product> inventory) {
+        System.out.println("\n*** Current Inventory ***");
+        for (int i = 0; i < inventory.size(); i++) {
+            System.out.println(inventory.get(i));
+        }
+    }
+
+    public static Product lookupProductById(Scanner scnr, ArrayList<Product> inventory) {
+        boolean isValid = false;
+        int id = -1;
+
+        while (!isValid) { //loops while input = non-integer
+            try {
+                System.out.print("\nEnter ID of desired product: ");
+                id = Integer.parseInt(scnr.nextLine());
+
+                isValid = true;
+            } catch (Exception e) {
+                System.out.println("Invalid input.");
+            }
+        }
+
+        //loop through inventory & return product if matching id
+        for (Product product : inventory) {
+            if (id == product.getId()) {
+                return product;
+            }
+        }
+
+        return null; //return null if not found
     }
 }
