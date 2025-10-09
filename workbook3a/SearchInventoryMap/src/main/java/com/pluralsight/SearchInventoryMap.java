@@ -1,0 +1,207 @@
+package com.pluralsight;
+
+import java.util.*;
+import java.io.*;
+import java.net.URL;
+
+public class SearchInventoryMap {
+    public static void main(String[] args) throws IOException {
+        Scanner scnr = new Scanner(System.in);
+        System.out.print("*** Search Inventory Map Application ***");
+
+        HashMap<String, Product> inventory = loadInventory();
+
+        String choice;
+
+        do {
+            printMenu();
+            choice = scnr.nextLine();
+
+            switch (choice) {
+                case "1": //list all products
+                    printInventory(inventory);
+                    break;
+                case "2": //lookup product by id
+                    Product productToFind = lookupProductByName(scnr, inventory);
+
+                    if (productToFind == null) {
+                        System.out.println("Product not found.");
+                    }
+                    else {
+                        System.out.println("Found Product - " + productToFind);
+                    }
+                    break;
+                case "3": //find all products within price range
+                    printProductInPriceRange(scnr, inventory);
+                    break;
+                case "4": //add new product
+                    addNewProduct(scnr, inventory);
+                    break;
+                case "5": //exit
+                    System.out.println("\n*** Thank you! ***");
+                    break;
+                default: //invalid
+                    System.out.println("Invalid input. Please try agin.");
+            }
+
+        } while (!choice.equals("5"));
+
+        scnr.close();
+    }
+
+    public static HashMap<String, Product> loadInventory() throws IOException {
+        HashMap<String, Product> inventory = new HashMap<>();
+
+        URL resource = SearchInventoryMap.class.getClassLoader().getResource("inventory.csv");
+
+        if (resource == null) {
+            System.out.println("Error: File not found.");
+            return inventory; //returns empty inventory
+        }
+
+        File file = new File(resource.getFile());
+        String currLine;
+        String[] tempArr;
+        Product tempProduct;
+
+        try (BufferedReader bufReader = new BufferedReader(new FileReader(file))) {
+            while ((currLine = bufReader.readLine()) != null) {
+                tempArr = currLine.split("\\|");
+
+                // create new product (id, name, price)
+                tempProduct = new Product(Integer.parseInt(tempArr[0]), tempArr[1], Double.parseDouble(tempArr[2]));
+                // add to inventory w/ key = product name, value = product
+                inventory.put(tempProduct.getName(), tempProduct);
+            }
+        }
+
+//        5 items for testing
+//        inventory.add(new Product(1, "Apple", 1.99));
+//        inventory.add(new Product(2, "Banana", 0.99));
+//        inventory.add(new Product(3, "Grapes", 2.99));
+//        inventory.add(new Product(4, "Cuties", 5.99));
+//        inventory.add(new Product(5, "24K Golden Labubu", 99.99));
+        return inventory;
+    }
+
+    public static void printMenu() {
+        System.out.print("""
+                \n-------------------------------------------------
+                What would you like to do?
+                    1. List all products
+                    2. Lookup a product by name
+                    3. Find all products within a price range
+                    4. Add a new product
+                    5. Quit the application
+                Enter choice (1-5):\s""");
+    }
+
+    public static void printInventory(HashMap<String, Product> inventory) {
+        //turn hashmap values into unsorted list
+        List<Product> inventoryByName = new ArrayList<>(inventory.values());
+
+        //sort list
+        inventoryByName.sort(Comparator.comparing(Product::getName));
+
+        System.out.println("\n*** Current Inventory ***");
+        for (Product product : inventoryByName) {
+            System.out.println(product);
+        }
+    }
+
+    public static Product lookupProductByName(Scanner scnr, HashMap<String, Product> inventory) {
+        System.out.print("\nEnter name of desired product: ");
+        String productNameToSearch = scnr.nextLine().trim();
+
+        //loop through inventory & return product if matching id
+        for (String key : inventory.keySet()) {
+            if (productNameToSearch.equalsIgnoreCase(key)) {
+                return inventory.get(key);
+            }
+        }
+        return null; //return null if not found
+    }
+
+    public static void printProductInPriceRange(Scanner scnr, HashMap<String, Product> inventory) {
+        boolean isValid = false;
+        double minPrice = 0;
+        double maxPrice = 0;
+        int count = 0;
+
+        //loops while input = non-double
+        while (!isValid) {
+            try {
+                System.out.print("\nEnter minimum price: ");
+                minPrice = Double.parseDouble(scnr.nextLine().trim());
+                System.out.print("Enter maximum price: ");
+                maxPrice = Double.parseDouble(scnr.nextLine().trim());
+
+                if (minPrice < 0 || maxPrice < 0) {
+                    System.out.println("Invalid input.");
+                }
+                else {
+                    isValid = true;
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Invalid input.");
+            }
+        }
+
+        //find and print products
+        System.out.printf("\n*** Products in Range $%.2f - $%.2f ***\n", minPrice, maxPrice);
+        for (Product product : inventory.values()) {
+            if (product.getPrice() > minPrice && product.getPrice() < maxPrice) {
+                count++;
+                System.out.println("(" + count + ") " + product);
+            }
+        }
+
+        if (count == 0) {
+            System.out.println("No products found in price range.");
+        }
+
+    }
+
+    public static void addNewProduct(Scanner scnr, HashMap<String, Product> inventory) {
+        boolean isValid = false;
+        int id = -1;
+        String name = "";
+        double price = -1;
+
+        //loop while user inputs invalid values
+        while (!isValid) {
+            try {
+                //get id
+                System.out.print("\nEnter 4-digit ID of product: ");
+                id = Integer.parseInt(scnr.nextLine().trim());
+
+                if (id > 9999 || id < 0) { //check if id is positive 4-digit number
+                    System.out.println("Not a valid ID!");
+                }
+                else {
+                    //get name
+                    System.out.print("Enter name of product: ");
+                    name = scnr.nextLine().trim();
+
+                    //get price
+                    System.out.print("Enter price of product: ");
+                    price = Double.parseDouble(scnr.nextLine().trim());
+
+                    if (price < 0) { //check if price is negative
+                        System.out.println("Not a valid price!");
+                    }
+                    else {
+                        isValid = true;
+                    }
+                }
+            }
+            catch (Exception e) { // wrong data type inputs
+                System.out.println("Invalid input. Please try again.");
+            }
+        }
+
+        inventory.put(name, new Product(id, name, price));
+        System.out.printf("\n*** \"%s\" was successfully added to the inventory! ***\n", name);
+    }
+}
