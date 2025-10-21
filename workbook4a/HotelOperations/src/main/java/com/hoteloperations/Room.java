@@ -39,15 +39,36 @@ public class Room {
 
     // *** Setters ***
     public void checkIn() {
-        isOccupied = true;
-        isDirty = true;
+        if (isOccupied) {
+            System.out.println("Room already occupied.");
+        }
+        else if (isDirty) {
+            System.out.println("Unable to check in. Room is still dirty.");
+        }
+        else {
+            isOccupied = true;
+            isDirty = true;
+        }
     }
 
     public void checkOut() {
-        isOccupied = false;
+        if (!isOccupied) {
+            System.out.println("Unable to check out. Room has not yet been checked in.");
+        }
+        else {
+            isOccupied = false;
+        }
     }
 
     public void cleanRoom() {
-        isDirty = false;
+        if (isOccupied) {
+            System.out.println("Room is still occupied.");
+        }
+        else if (!isDirty) {
+            System.out.println("Room is already clean.");
+        }
+        else {
+            isDirty = false;
+        }
     }
 }

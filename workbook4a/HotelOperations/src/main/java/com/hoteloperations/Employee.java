@@ -12,11 +12,24 @@ public class Employee {
 
     // *** Constructors ***
 
-    public Employee(String employeeId, String name, double payRate, String department, double hoursWorked) {
+
+    public Employee(String employeeId, String name) {
         this.employeeId = employeeId;
         this.name = name;
-        this.payRate = payRate;
+        this.department = "Unknown";
+        this.payRate = 0;
+        this.hoursWorked = 0;
+        this.startTime = null;
+    }
+
+    public Employee(String employeeId, String name, String department, double payRate) {
+        this(employeeId, name);
         this.department = department;
+        this.payRate = payRate;
+    }
+
+    public Employee(String employeeId, String name, String department, double payRate, double hoursWorked) {
+        this(employeeId, name, department, payRate);
         this.hoursWorked = hoursWorked;
     }
 
@@ -59,6 +72,10 @@ public class Employee {
         return hoursWorked - 40;
     }
 
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
     // *** Setters ***
 
     public void setEmployeeId(String employeeId) {
@@ -82,7 +99,12 @@ public class Employee {
     }
 
     public void punchIn(double time) {
-        this.startTime = LocalTime.of((int) time, (int) (time * 100) % 100);
+        if (time < 0 || time >= 24) {
+            System.out.println("Invalid time.");
+        }
+        else {
+            this.startTime = LocalTime.of((int) time, (int) (time % 1 * 60));
+        }
     }
 
     public void punchIn() {
@@ -90,7 +112,18 @@ public class Employee {
     }
 
     public void punchOut(double time) {
-        this.hoursWorked = time - (startTime.getHour() + startTime.getMinute() / 100.0); //end - start as double
+        if (startTime == null) {
+            System.out.println("Cannot punch out when employee has not punched in yet.");
+        }
+        else {
+            double startTimeInDecimal = startTime.getHour() + (startTime.getMinute() / 60.0);
+
+            if (time < startTimeInDecimal || time >= 24) {
+                System.out.println("Invalid time. Must be after start time.");
+            } else {
+                this.hoursWorked = time - startTimeInDecimal;
+            }
+        }
     }
 
     public void punchOut() {
