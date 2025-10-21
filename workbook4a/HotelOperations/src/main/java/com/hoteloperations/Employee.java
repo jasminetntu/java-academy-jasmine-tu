@@ -1,11 +1,14 @@
 package com.hoteloperations;
 
+import java.time.LocalTime;
+
 public class Employee {
     private String employeeId;
     private String name;
     private String department;
     private double payRate;
     private double hoursWorked;
+    private LocalTime startTime;
 
     // *** Constructors ***
 
@@ -78,7 +81,20 @@ public class Employee {
         this.department = department;
     }
 
-    public void punchTimeCard (double startTime, double endTime) {
-        hoursWorked = endTime - startTime;
+    public void punchIn(double time) {
+        this.startTime = LocalTime.of((int) time, (int) (time * 100) % 100);
+    }
+
+    public void punchIn() {
+        this.startTime = LocalTime.now();
+    }
+
+    public void punchOut(double time) {
+        this.hoursWorked = time - (startTime.getHour() + startTime.getMinute() / 100.0); //end - start as double
+    }
+
+    public void punchOut() {
+        this.hoursWorked = (LocalTime.now().getHour() + LocalTime.now().getMinute() / 100.0) //end time as double
+                - (startTime.getHour() + startTime.getMinute() / 100.0); //start time as double
     }
 }
