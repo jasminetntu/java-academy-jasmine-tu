@@ -42,6 +42,7 @@ public class Employee {
     public double getTotalPay() {
         return (getRegularHours() + (getOvertimeHours() * 1.5)) * payRate;
     }
+
     public double getRegularHours() {
         if (hoursWorked < 40) {
             return hoursWorked;
@@ -75,5 +76,9 @@ public class Employee {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public void punchTimeCard (double startTime, double endTime) {
+        hoursWorked = endTime - startTime;
     }
 }
