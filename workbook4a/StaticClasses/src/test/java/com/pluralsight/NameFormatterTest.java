@@ -37,12 +37,67 @@ class NameFormatterTest {
     }
 
     @Test
-    void format_GivenNameWithMiddle_ReturnCorrectFormat() {
+    void format_GivenFullNameWithMiddle_ReturnCorrectFormat() {
         //arrange
+        String fullName = "Mel B Johnson";
+        String expected = "Johnson, Mel B";
 
         //act
-
+        String result = NameFormatter.format(fullName);
 
         //assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void format_GivenFullNameWithPrefix_ReturnCorrectFormat() {
+        //arrange
+        String fullName = "Dr. Mel Johnson";
+        String expected = "Johnson, Dr. Mel";
+
+        //act
+        String result = NameFormatter.format(fullName);
+
+        //assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void format_GivenFullNameWithSuffix_ReturnCorrectFormat() {
+        //arrange
+        String fullName = "Mel Johnson, PhD";
+        String expected = "Johnson, Mel, PhD";
+
+        //act
+        String result = NameFormatter.format(fullName);
+
+        //assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void format_GivenFullNameWithOnlyFirstLast_ReturnCorrectFormat() {
+        //arrange
+        String fullName = "Mel Johnson";
+        String expected = "Johnson, Mel";
+
+        //act
+        String result = NameFormatter.format(fullName);
+
+        //assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void format_GivenFullName_ReturnCorrectFormat() {
+        //arrange
+        String fullName = "Dr. Mel B Johnson, PhD";
+        String expected = "Johnson, Dr. Mel B, PhD";
+
+        //act
+        String result = NameFormatter.format(fullName);
+
+        //assert
+        assertEquals(expected, result);
     }
 }
