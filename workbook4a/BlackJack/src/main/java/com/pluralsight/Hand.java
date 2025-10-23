@@ -18,6 +18,17 @@ public class Hand {
         return cards.size();
     }
 
+    public boolean hasA() {
+        for (Card c : cards) {
+            c.flip();
+            if (c.getValue().equalsIgnoreCase("a")) {
+                return true;
+            }
+            c.flip();
+        }
+        return false;
+    }
+
     // Hand uses methods of each card to determine value of each card & adds up all values
     public int getValue() {
         int value = 0;
@@ -26,6 +37,11 @@ public class Hand {
             value += card.getPointValue();
             card.flip(); // hide the card again
         }
+
+        if (value > 21 && hasA()) { //count ace as 1 if 11 causes hand to bust
+            value -= 10;
+        }
+
         return value;
     }
 

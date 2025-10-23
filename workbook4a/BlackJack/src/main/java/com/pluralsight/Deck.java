@@ -26,7 +26,7 @@ public class Deck {
     }
 
     public Card deal() {
-        // deal the top card (if there are any cards left)
+        // dealTwo the top card (if there are any cards left)
         if (!cards.isEmpty()) {
             return cards.remove(0);
         } else {
