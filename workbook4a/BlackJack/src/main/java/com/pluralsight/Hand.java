@@ -33,7 +33,7 @@ public class Hand {
         for (int i = 0; i < cards.size(); ++i) {
             Card card = cards.get(i);
             card.flip();
-            System.out.println("Card " + (i + 1) + ": " + cards.get(i).getSuit()
+            System.out.println("🃏 " + (i + 1) + ": " + cards.get(i).getSuit()
                     + " " + cards.get(i).getValue());
             card.flip();
         }

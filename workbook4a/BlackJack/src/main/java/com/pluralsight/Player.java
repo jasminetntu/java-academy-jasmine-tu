@@ -26,7 +26,7 @@ public class Player {
     }
 
     public void displayHand() {
-        System.out.println("> " + name + "'s Hand <");
+        System.out.println("--- " + name + "'s Hand ---");
         hand.viewHand();
     }
 }
