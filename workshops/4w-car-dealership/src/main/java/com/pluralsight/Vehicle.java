@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+// import java.math.BigDecimal; implement for price if have time
+
 public class Vehicle {
     private int vehicleId;
     private int year;
