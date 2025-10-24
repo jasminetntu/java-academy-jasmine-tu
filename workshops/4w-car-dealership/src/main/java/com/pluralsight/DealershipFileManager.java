@@ -3,9 +3,9 @@ package com.pluralsight;
 import java.io.*;
 
 public class DealershipFileManager {
-    public Dealership getDealership() {
-        String FILE_PATH = "src/main/resources/inventory.csv";
+    private final String FILE_PATH = "src/main/resources/inventory.csv";
 
+    public Dealership getDealership() {
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
             //extract dealership
             String[] dealershipInfo = br.readLine().trim().split("\\|");
