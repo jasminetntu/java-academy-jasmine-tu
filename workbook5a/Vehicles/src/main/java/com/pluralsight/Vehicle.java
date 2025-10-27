@@ -6,6 +6,21 @@ public class Vehicle {
     int cargoCapacity;
     int fuelCapacity;
 
+    // *** Constructors ***
+    public Vehicle() {
+        this.color = "Unknown";
+        this.numberOfPassengers = 0;
+        this.cargoCapacity = 0;
+        this.fuelCapacity = 0;
+    }
+
+    public Vehicle(String color, int numberOfPassengers, int cargoCapacity, int fuelCapacity) {
+        this.color = color;
+        this.numberOfPassengers = numberOfPassengers;
+        this.cargoCapacity = cargoCapacity;
+        this.fuelCapacity = fuelCapacity;
+    }
+
     // *** Getters ***
 
     public String getColor() {
