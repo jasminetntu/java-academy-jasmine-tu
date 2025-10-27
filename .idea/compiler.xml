@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="shopping-list" />
         <module name="cat-exercise" />
+        <module name="Vehicles" />
       </profile>
     </annotationProcessing>
   </component>
