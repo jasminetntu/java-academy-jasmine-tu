@@ -28,6 +28,10 @@ public class Asset {
         return dateAcquired;
     }
 
+    public double getOriginalCost() {
+        return originalCost;
+    }
+
     public double getValue() {
         return originalCost;
     }
