@@ -36,7 +36,7 @@ public class Vehicle extends Asset {
 
     @Override
     public double getValue() {
-        double value = super.getValue();
+        double value = super.getOriginalCost();
         int yearAcquired = Integer.parseInt(super.getDateAcquired().substring(6));
         int yearsOwned = Math.abs(year - yearAcquired);
 

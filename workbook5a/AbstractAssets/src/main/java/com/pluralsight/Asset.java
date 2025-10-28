@@ -32,9 +32,7 @@ public abstract class Asset {
         return originalCost;
     }
 
-    public double getValue() {
-        return originalCost;
-    }
+    public abstract double getValue();
 
     // *** Setters ***
     public void setDescription(String description) {
