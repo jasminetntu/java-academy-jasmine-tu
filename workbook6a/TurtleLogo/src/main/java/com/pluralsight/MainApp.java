@@ -13,7 +13,7 @@ public class MainApp
         // the TurtleLogo application works
 
         // The world is your canvas
-        World world = new World(200, 200);
+        World world = new World(500, 500);
         Turtle turtle = new Turtle(world,-100, -100);
         
         int width = 200;
@@ -24,7 +24,6 @@ public class MainApp
         double widthSquared = Math.pow(width, 2);
         double heightSquared = Math.pow(height, 2);
         double hypotenuse = Math.sqrt(widthSquared + heightSquared);
-
 
         turtle.setPenWidth(3);
         turtle.setColor(Color.GREEN);
@@ -38,5 +37,6 @@ public class MainApp
 
         turtle.penDown();
         turtle.forward(hypotenuse);
+
     }
 }
