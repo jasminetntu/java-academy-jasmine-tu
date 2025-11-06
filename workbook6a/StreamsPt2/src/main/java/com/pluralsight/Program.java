@@ -37,40 +37,32 @@ public class Program {
         System.out.print("Enter the LAST NAME to search (or enter to skip):");
         String lastName = scnr.nextLine().trim();
 
-        // print matching names w/ loop
-        List<Person> matchingNames = new ArrayList<>();
+        // print matching names w/ streams
+        people.stream()
+                .filter(p -> firstName.isEmpty() || p.getFirstName().equalsIgnoreCase(firstName))
+                .filter(p -> lastName.isEmpty() || p.getLastName().equalsIgnoreCase(lastName))
+                .forEach(System.out::println);
 
-        for (Person p : people) {
-            boolean firstMatch = firstName.isEmpty() || p.getFirstName().equalsIgnoreCase(firstName);
-            boolean lastMatch = lastName.isEmpty() || p.getLastName().equalsIgnoreCase(lastName);
-
-            if (firstMatch && lastMatch) {
-                matchingNames.add(p);
-            }
-        }
-
-        for (Person p : matchingNames) {
-            System.out.println(p);
-        }
 
         // print ave, max, min ages
-        double sum = 0;
-        int max = people.get(0).getAge();
-        int min = people.get(0).getAge();
-        for (Person p : people) {
-            sum += p.getAge();
-            if (p.getAge() > max) {
-                max = p.getAge();
-            }
-            if (p.getAge() < min) {
-                min = p.getAge();
-            }
-        }
-        System.out.println("\nAverage age: " + (sum / people.size()) +
-                "\nMax age: " + max +
-                "\nMin age: " + min);
+        double sum = people.stream()
+                .mapToInt(Person::getAge)
+                .sum();
+
+        double minAge = people.stream()
+                .mapToInt(Person::getAge)
+                .min()
+                .orElse(0);
+
+        double maxAge = people.stream()
+                .mapToInt(Person::getAge)
+                .max()
+                .orElse(0);
 
 
+        System.out.println("Average age: " + (sum / people.size()) +
+                "\nMax age: " + maxAge +
+                "\nMin age: " + minAge);
 
     }
 }
