@@ -9,6 +9,9 @@ public class MainApp
 {
     public static void main(String[] args)
     {
+        bug here
+
+
         // This starter code to get you familiar with how
         // the TurtleLogo application works
 
