@@ -1,5 +1,6 @@
 /*
-workbook 7a
+jasmine tu
+yuu ltca - workbook 7a
 basic-queries exercise
 */
 
