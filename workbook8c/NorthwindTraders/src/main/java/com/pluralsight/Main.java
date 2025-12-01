@@ -8,10 +8,11 @@ public class Main {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
         // open connection
+        // DriverManager = classic/older way
         Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/northwind",
                 "root",
-                "yearup25");
+                "insertpasswordhere");
 
         // create statement
         Statement statement = connection.createStatement();
