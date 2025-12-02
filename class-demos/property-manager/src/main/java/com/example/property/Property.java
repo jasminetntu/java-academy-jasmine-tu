@@ -81,16 +81,15 @@ public class Property {
 
     @Override
     public String toString() {
+        String propertyDetails = String.format("%d br, %d bath, %d m²", bedrooms, bathrooms, squareMeters);
         return String.format(
-                "[%d] %-9s | %-25s | %-10s %-12s | %d br, %d bath, %d m² | €%.2f | %s | %s",
+                "[%d] %-9s | %-25s | %-10s %-12s | %-20s | €%.2f | %-15s | %s",
                 id,
                 type,
                 address,
                 postalCode,
                 city,
-                bedrooms,
-                bathrooms,
-                squareMeters,
+                propertyDetails,
                 monthlyRent,
                 available ? "AVAILABLE" : "NOT AVAILABLE",
                 (notes == null ? "" : notes)

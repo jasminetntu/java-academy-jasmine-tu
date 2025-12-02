@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class PropertyApp {
     public static void main(String[] args) {
         // TODO: Update to your MySQL configuration
-        String url = "jdbc:mysql://localhost:3306/propertydb?useSSL=false&serverTimezone=UTC";
+        String url = "jdbc:mysql://localhost:3306/property?useSSL=false&serverTimezone=UTC";
         String user = "root";
-        String password = "your_password_here";
+        String password = "insert-password-here";
 
         PropertyDao dao = new PropertyDao(url, user, password);
         Scanner scanner = new Scanner(System.in);

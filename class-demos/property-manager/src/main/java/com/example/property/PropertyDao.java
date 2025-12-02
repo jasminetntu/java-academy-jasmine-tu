@@ -25,7 +25,7 @@ public class PropertyDao {
         List<Property> properties = new ArrayList<>();
         String sql = "SELECT id, type, address, city, postal_code, bedrooms," +
         " bathrooms, square_meters, monthly_rent, is_available, notes " +
-        "FROM Property";
+        "FROM property.PropertyTb";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
