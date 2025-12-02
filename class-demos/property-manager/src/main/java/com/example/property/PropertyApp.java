@@ -1,7 +1,11 @@
 package com.example.property;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+
+import com.example.utility.InputValidator;
+
 public class PropertyApp {
     public static void main(String[] args) {
         // TODO: Update to your MySQL configuration
@@ -108,38 +112,33 @@ public class PropertyApp {
 
     // Option 4: Add a property via user input
     private static void addPropertyFromInput(PropertyDao dao, Scanner scanner) {
+        InputValidator validator = new InputValidator(scanner);
+
         try {
             System.out.println("\n=== ADD NEW PROPERTY ===");
-            System.out.print("Type (HOUSE/APARTMENT): ");
-            String type = scanner.nextLine().trim().toUpperCase();
+            String type = validator.getValidType();
 
-            System.out.print("Address: ");
+            System.out.print("\nAddress: ");
             String address = scanner.nextLine().trim();
 
-            System.out.print("City: ");
+            System.out.print("\nCity: ");
             String city = scanner.nextLine().trim();
 
-            System.out.print("Postal code: ");
+            System.out.print("\nPostal code: ");
             String postalCode = scanner.nextLine().trim();
 
-            System.out.print("Bedrooms (int): ");
-            int bedrooms = Integer.parseInt(scanner.nextLine().trim());
+            int bedrooms = validator.getInteger("Bedrooms (int): ");
 
-            System.out.print("Bathrooms (int): ");
-            int bathrooms = Integer.parseInt(scanner.nextLine().trim());
+            int bathrooms = validator.getInteger("Bathrooms (int): ");
 
-            System.out.print("Square meters (int): ");
-            int squareMeters = Integer.parseInt(scanner.nextLine().trim());
+            int squareMeters = validator.getInteger("Square meters (int): ");
 
-            System.out.print("Monthly rent (e.g. 1450.00): ");
-            double monthlyRent = Double.parseDouble(scanner.nextLine().trim());
+            double monthlyRent = validator.getDouble("Monthly rent (e.g. 1450.00): ");
 
-            System.out.print("Is available? (true/false): ");
-            boolean isAvailable = Boolean.parseBoolean(scanner.nextLine().trim());
+            boolean isAvailable = validator.getBoolean("Is available? (true/false): ");
 
             System.out.print("Notes (optional, press Enter to skip): ");
             String notes = scanner.nextLine().trim();
-
             if (notes.isEmpty()) {
                 notes = null;
             }
@@ -159,8 +158,6 @@ public class PropertyApp {
 
             int newId = dao.addProperty(property);
             System.out.println("Property added with ID: " + newId);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid number input. Property not added.");
         } catch (SQLException e) {
             System.out.println("Database error while adding property: " + e.getMessage());
         }
