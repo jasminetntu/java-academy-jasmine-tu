@@ -25,6 +25,9 @@ public class PropertyApp {
                     viewAvailableProperties(dao);
                     break;
                 case "3":
+                    searchByCity(dao, scanner);
+                    break;
+                case "4":
                     addPropertyFromInput(dao, scanner);
                     break;
                 case "0":
@@ -43,7 +46,8 @@ public class PropertyApp {
         System.out.println("=== PROPERTY MANAGEMENT ===");
         System.out.println("1. View all properties");
         System.out.println("2. View available properties");
-        System.out.println("3. Add a new property");
+        System.out.println("3. Search properties by city");
+        System.out.println("4. Add a new property");
         System.out.println("0. Exit");
     }
 
@@ -64,7 +68,7 @@ public class PropertyApp {
         }
     }
 
-    // Option 2: View all
+    // Option 2: View available
     private static void viewAvailableProperties(PropertyDao dao) {
         try {
             List<Property> properties = dao.getAvailableProperties();
@@ -72,7 +76,7 @@ public class PropertyApp {
                 System.out.println("No properties found.");
                 return;
             }
-            System.out.println("=== ALL PROPERTIES ===");
+            System.out.println("=== AVAILABLE PROPERTIES ===");
             for (Property p : properties) {
                 System.out.println(p);
             }
@@ -81,7 +85,28 @@ public class PropertyApp {
         }
     }
 
-    // Option 3: Add a property via user input
+    // Option 3: Search by city
+    private static void searchByCity(PropertyDao dao, Scanner scanner) {
+        try {
+            System.out.println("=== SEARCH PROPERTIES BY CITY ===");
+            System.out.print("Enter city: ");
+            String city = scanner.nextLine().trim();
+
+            List<Property> properties = dao.getPropertiesByCity(city);
+            if (properties.isEmpty()) {
+                System.out.println("No properties in " + city + " found.");
+                return;
+            }
+            System.out.println("=== PROPERTIES IN " + city.toUpperCase() + " ===");
+            for (Property p : properties) {
+                System.out.println(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while fetching properties: " + e.getMessage());
+        }
+    }
+
+    // Option 4: Add a property via user input
     private static void addPropertyFromInput(PropertyDao dao, Scanner scanner) {
         try {
             System.out.println("=== ADD NEW PROPERTY ===");
@@ -140,4 +165,5 @@ public class PropertyApp {
             System.out.println("Database error while adding property: " + e.getMessage());
         }
     }
+
 }
