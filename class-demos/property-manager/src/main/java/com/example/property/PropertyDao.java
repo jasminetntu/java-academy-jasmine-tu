@@ -52,7 +52,7 @@ public class PropertyDao {
 
     // 2. Add new property – returns generated id
     public int addProperty(Property property) throws SQLException {
-        String sql = "INSERT INTO Property " +
+        String sql = "INSERT INTO property.PropertyTb " +
                 "(type, address, city, postal_code, bedrooms, bathrooms, " +
                 " square_meters, monthly_rent, is_available, notes) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
