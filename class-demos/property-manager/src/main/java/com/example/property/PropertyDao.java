@@ -61,6 +61,7 @@ public class PropertyDao {
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
+
             while (rs.next()) {
                 Property p = new Property(
                         rs.getInt("id"),
@@ -91,6 +92,7 @@ public class PropertyDao {
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, city);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -121,9 +123,9 @@ public class PropertyDao {
                 "(type, address, city, postal_code, bedrooms, bathrooms, " +
                 " square_meters, monthly_rent, is_available, notes) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(
-                     sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, property.getType());
             stmt.setString(2, property.getAddress());
             stmt.setString(3, property.getCity());
@@ -134,10 +136,12 @@ public class PropertyDao {
             stmt.setDouble(8, property.getMonthlyRent());
             stmt.setBoolean(9, property.isAvailable());
             stmt.setString(10, property.getNotes());
+
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Inserting property failed, no rows affected.");
             }
+
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt(1); // new ID
