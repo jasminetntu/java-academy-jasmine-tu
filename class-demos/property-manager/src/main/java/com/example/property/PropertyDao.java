@@ -50,7 +50,38 @@ public class PropertyDao {
         return properties;
     }
 
-    // 2. Add new property – returns generated id
+    // 2. View available properties
+    public List<Property> getAvailableProperties() throws SQLException {
+        List<Property> properties = new ArrayList<>();
+        String sql = "SELECT id, type, address, city, postal_code, bedrooms," +
+                " bathrooms, square_meters, monthly_rent, is_available, notes " +
+                "FROM property.PropertyTb " +
+                "WHERE is_available = TRUE;";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Property p = new Property(
+                        rs.getInt("id"),
+                        rs.getString("type"),
+                        rs.getString("address"),
+                        rs.getString("city"),
+                        rs.getString("postal_code"),
+                        rs.getInt("bedrooms"),
+                        rs.getInt("bathrooms"),
+                        rs.getInt("square_meters"),
+                        rs.getDouble("monthly_rent"),
+                        rs.getBoolean("is_available"),
+                        rs.getString("notes")
+                );
+                properties.add(p);
+            }
+        }
+        return properties;
+    }
+
+    // 3. Add new property – returns generated id
     public int addProperty(Property property) throws SQLException {
         String sql = "INSERT INTO property.PropertyTb " +
                 "(type, address, city, postal_code, bedrooms, bathrooms, " +
