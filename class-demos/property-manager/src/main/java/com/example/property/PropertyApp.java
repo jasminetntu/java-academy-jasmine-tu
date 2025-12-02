@@ -59,7 +59,7 @@ public class PropertyApp {
                 System.out.println("No properties found.");
                 return;
             }
-            System.out.println("=== ALL PROPERTIES ===");
+            System.out.println("\n=== ALL PROPERTIES ===");
             for (Property p : properties) {
                 System.out.println(p);
             }
@@ -76,7 +76,7 @@ public class PropertyApp {
                 System.out.println("No properties found.");
                 return;
             }
-            System.out.println("=== AVAILABLE PROPERTIES ===");
+            System.out.println("\n=== AVAILABLE PROPERTIES ===");
             for (Property p : properties) {
                 System.out.println(p);
             }
@@ -88,7 +88,7 @@ public class PropertyApp {
     // Option 3: Search by city
     private static void searchByCity(PropertyDao dao, Scanner scanner) {
         try {
-            System.out.println("=== SEARCH PROPERTIES BY CITY ===");
+            System.out.println("\n=== SEARCH PROPERTIES BY CITY ===");
             System.out.print("Enter city: ");
             String city = scanner.nextLine().trim();
 
@@ -97,7 +97,7 @@ public class PropertyApp {
                 System.out.println("No properties in " + city + " found.");
                 return;
             }
-            System.out.println("=== PROPERTIES IN " + city.toUpperCase() + " ===");
+            System.out.println("\n=== PROPERTIES IN " + city.toUpperCase() + " ===");
             for (Property p : properties) {
                 System.out.println(p);
             }
@@ -109,7 +109,7 @@ public class PropertyApp {
     // Option 4: Add a property via user input
     private static void addPropertyFromInput(PropertyDao dao, Scanner scanner) {
         try {
-            System.out.println("=== ADD NEW PROPERTY ===");
+            System.out.println("\n=== ADD NEW PROPERTY ===");
             System.out.print("Type (HOUSE/APARTMENT): ");
             String type = scanner.nextLine().trim().toUpperCase();
 
