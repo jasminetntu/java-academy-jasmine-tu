@@ -34,6 +34,12 @@ public class PropertyApp {
                 case "4":
                     addPropertyFromInput(dao, scanner);
                     break;
+                case "5":
+
+                    break;
+                case "6":
+
+                    break;
                 case "0":
                     running = false;
                     System.out.println("Exiting app. Goodbye!");
@@ -52,6 +58,8 @@ public class PropertyApp {
         System.out.println("2. View available properties");
         System.out.println("3. Search properties by city");
         System.out.println("4. Add a new property");
+        System.out.println("5. Update a property");
+        System.out.println("6. Delete a property");
         System.out.println("0. Exit");
     }
 
@@ -162,5 +170,4 @@ public class PropertyApp {
             System.out.println("Database error while adding property: " + e.getMessage());
         }
     }
-
 }
