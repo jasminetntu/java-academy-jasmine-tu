@@ -120,7 +120,7 @@ public class Main {
             // create statement
             preparedStatement = connection.prepareStatement(
                     "SELECT contactName, companyName, city, country, phone FROM northwind.customers " +
-                            "ORDER BY contactName");
+                            "ORDER BY country");
 
             // execute query
             resultSet = preparedStatement.executeQuery();
