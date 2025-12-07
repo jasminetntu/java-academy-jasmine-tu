@@ -26,6 +26,7 @@ public class Main {
                         What do you want to do?
                             1) Display all products
                             2) Display all customers
+                            3) Display all categories
                             0) Exit
                         Select an option:\s""");
                 String choice = scnr.nextLine().trim().toLowerCase();
@@ -33,6 +34,10 @@ public class Main {
                 switch (choice) {
                     case "1" -> main.displayProducts(username, password);
                     case "2" -> main.displayCustomers(username, password);
+                    case "3" -> {
+                        main.displayCategories(username, password);
+                        main.displayProductsFromCategory(username, password, scnr);
+                    }
                     case "0" -> {
                         System.out.println("Goodbye!");
                         running = false;
@@ -171,4 +176,70 @@ public class Main {
         }
     }
 
+    private void displayCategories(String username, String password) {
+        try (Connection connection = DriverManager.getConnection( // DriverManager = classic/older way
+                "jdbc:mysql://localhost:3306/northwind", username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT categoryId, categoryName FROM northwind.categories " +
+                     "ORDER BY categoryId")) {
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                System.out.println("\n*** Northwind Categories ***");
+                System.out.printf("%-5s %-15s%n", "Id", "Name");
+                System.out.println("----- ---------------");
+
+                while (resultSet.next()) {
+                    String categoryId = resultSet.getString("categoryId");
+                    String categoryName = resultSet.getString("categoryName");
+                    System.out.printf("%-5s %-15s%n", categoryId, categoryName);
+                }
+                System.out.println("----- ---------------\n");
+            } catch (SQLException e) {
+                System.out.println("Something went wrong while reading results.");
+                e.printStackTrace();
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Something went wrong while opening connection.");
+            e.printStackTrace();
+        }
+    }
+
+    private void displayProductsFromCategory(String username, String password, Scanner scnr) {
+        try (Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/northwind", username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT productId, productName, unitPrice, unitsInStock FROM northwind.products " +
+                        "WHERE categoryId = ? ORDER BY productId"
+        )) {
+            System.out.print("Enter category ID to search products by: ");
+            int categoryId = Integer.parseInt(scnr.nextLine());
+            preparedStatement.setInt(1, categoryId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                System.out.println("\n*** Northwind Products by Category ***");
+                System.out.printf("%-4s %-40s %-7s %-6s%n", "Id", "Name", "Price", "Stock");
+                System.out.println("---- ---------------------------------------- ------- ------");
+
+                while (resultSet.next()) {
+                    int productId = resultSet.getInt("productId");
+                    String productName = resultSet.getString("productName");
+                    String unitPrice = String.format("%.2f", resultSet.getDouble("unitPrice"));
+                    int unitsInStock = resultSet.getInt("unitsInStock");
+                    System.out.printf("%-4s %-40s %-7s %-6d%n", productId, productName, unitPrice, unitsInStock);
+                }
+                System.out.println("---- ---------------------------------------- ------- ------\n");
+            } catch (SQLException e) {
+                System.out.println("Something went wrong while reading results.");
+                e.printStackTrace();
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Something went wrong while preparing query.");
+            e.printStackTrace();
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Category ID must be an integer.\n");
+        }
+    }
 }
