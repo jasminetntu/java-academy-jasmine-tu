@@ -5,30 +5,35 @@ import java.util.List;
 
 @Service
 public class ArtistService {
+    private final ArtistDao artistDao;
+
+    public ArtistService(ArtistDao artistDao) {
+        this.artistDao = artistDao;
+    }
+
     public Artist getFavoriteArtist() {
-        return new Artist(
-                "C.A.S.",
-                "X's",
-                "Hideaway"
-        );
+        // for now just return the first artist from the DB
+        List<Artist> all = artistDao.getAll();
+        return all.isEmpty() ? null : all.get(0);
     }
 
     public List<Artist> getAllArtists() {
-        return List.of(
-                new Artist("The Weeknd", "After Hours", "Blinding Lights"),
-                new Artist("Adele", "21", "Rolling in the Deep"),
-                new Artist("Coldplay", "Parachutes", "Yellow")
-        );
+        return artistDao.getAll();
     }
 
-    public Artist getArtistByName(String name) {
-        for (Artist a : getAllArtists()) {
-            if (a.getName().equalsIgnoreCase(name)) {
-                return a;
-            }
-        }
+    public Artist getArtistById(int id) {
+        return artistDao.getById(id);
+    }
 
-        //if not found
-        return null;
+    public int addArtist(Artist artist) {
+        return artistDao.insert(artist);
+    }
+
+    public int updateArtist(int id, Artist artist) {
+        return artistDao.update(id, artist);
+    }
+
+    public int deleteArtist(int id) {
+        return artistDao.delete(id);
     }
 }
