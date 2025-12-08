@@ -8,7 +8,6 @@ import java.util.List;
 
 @RestController
 public class ArtistController {
-
     private final ArtistService service;
 
     public ArtistController(ArtistService service) {

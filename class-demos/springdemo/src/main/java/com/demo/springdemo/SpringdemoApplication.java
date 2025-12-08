@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 public class SpringdemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringdemoApplication.class, args);
-        ArtistController artistController = new ArtistController(new ArtistService());
     }
 }
 
