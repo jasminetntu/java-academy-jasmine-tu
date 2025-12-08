@@ -1,8 +1,7 @@
 package com.pluralsight;
 
-import org.apache.commons.dbcp2.BasicDataSource;
-import javax.sql.DataSource;
 import java.sql.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -16,59 +15,75 @@ public class Main {
         String username = args[0]; // otherwise, get CLI args from config
         String password = args[1];
 
-        // create & configure datasource
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/sakila");
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+        SakilaDataManager sakilaDM = null;
+        try {
+            sakilaDM = new SakilaDataManager(username, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // interact w/ database
-        doSimpleQuery(dataSource);
+        Main main = new Main();
+        try (Scanner scnr = new Scanner(System.in)) {
+            main.queryActorsByName(scnr, sakilaDM);
+            main.queryFilmsByActor(scnr, sakilaDM);
+        }
     }
 
-    private static void doSimpleQuery (DataSource dataSource) {
-        // create connection and prepared statement
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement =
-                     connection.prepareStatement(
-                             """
-                                 SELECT first_name, last_name, title FROM sakila.actor
-                                 INNER JOIN sakila.film_actor
-                                    ON sakila.actor.actor_id = sakila.film_actor.actor_id
-                                 INNER JOIN sakila.film
-                                    ON sakila.film.film_id = sakila.film_actor.film_id
-                                 WHERE first_name LIKE ? AND last_name LIKE ?""")) {
+    private void queryActorsByName(Scanner scnr, SakilaDataManager sakilaDM) {
+        System.out.println("Let's search for actors!");
 
-            // Set any required parameters
-            Scanner scnr = new Scanner(System.in);
-            System.out.print("First Name: ");
+        System.out.print("Enter first name: ");
+        String firstName = scnr.nextLine();
+        System.out.print("Enter last name: ");
+        String lastName = scnr.nextLine();
 
-            String firstName = scnr.nextLine();
-            preparedStatement.setString(1, firstName);
+        List<Actor> actors = sakilaDM.getActorsByName(firstName, lastName);
 
-            System.out.print("Last Name: ");
+        if (actors.isEmpty()) {
+            System.out.println("No matches found!");
+        }
+        else {
+            System.out.println("ACTORS NAMED " + firstName.toUpperCase() + " " + lastName.toUpperCase());
+            System.out.printf("%n%-5s %-20s %-20s%n", "ID", "First Name", "Last Name");
+            System.out.println("----- -------------------- --------------------");
+            for (Actor a : actors) {
+                System.out.printf("%-5s %-20s %-20s%n", a.getActorId(), a.getFirstName(), a.getLastName());
+            }
+            System.out.println("----- -------------------- --------------------");
+        }
+    }
 
-            String lastName = scnr.nextLine();
-            preparedStatement.setString(2, lastName);
-            // Execute the query
+    private void queryFilmsByActor(Scanner scnr, SakilaDataManager sakilaDM) {
+        System.out.println("\nLet's search for films!");
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    System.out.println("Your matches are: \n");
-                    // Process the results
-                    while (resultSet.next()) {
-                        System.out.printf(
-                                "first_name = %s, last_name = %s, title = %s;\n",
-                                resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("title"));
-                    }
-                } else {
-                    System.out.println("No matches!");
-                }
+        int id = -1;
+        boolean valid = false;
+        while (!valid) {
+            try {
+                System.out.print("\nEnter actor id: ");
+                id = Integer.parseInt(scnr.nextLine());
+                valid = true;
+            }
+            catch (NumberFormatException e) {
+                System.out.println("Input must be a whole number.");
             }
         }
-        catch (SQLException e) {
-            System.out.println("Something went wrong.");
-            e.printStackTrace();
+
+        List<Film> films = sakilaDM.getFilmsByActorId(id);
+
+        if (films.isEmpty()) {
+            System.out.println("No matches found!");
+        }
+        else {
+            System.out.println("FILMS WITH ACTOR ID " + id);
+            System.out.printf("%n%-5s %-20s %-140s %-15s %-5s%n", "ID", "Title", "Description", "Release Year", "Length");
+            System.out.println("----- -------------------- -------------------------------------------------------------------------------------------------------------------------------------------- --------------- -----");
+            for (Film f : films) {
+                System.out.printf("%-5s %-20s %-140s %-15s %-5s%n", f.getFilmId(), f.getTitle(), f.getDescription(),
+                        f.getReleaseYear(), f.getLength());
+            }
+            System.out.println("----- -------------------- -------------------------------------------------------------------------------------------------------------------------------------------- --------------- -----");
         }
     }
 }
