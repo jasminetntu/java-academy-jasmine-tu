@@ -4,11 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- *  SpringdemoApplication is the main entry point for your Spring Boot app.
+ *  SpotifyApiDemoApplication is the main entry point for your Spring Boot app.
  * It's like the "main menu" of your project — when you hit 'Run', this is what launches first!
  */
 @SpringBootApplication
-public class SpringdemoApplication {
+public class SpotifyApiDemoApplication {
 
 	/**
 	 * 🎯 This is the standard Java `main()` method.
@@ -22,6 +22,6 @@ public class SpringdemoApplication {
 	 * @param args optional command-line arguments
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(SpringdemoApplication.class, args);
+		SpringApplication.run(SpotifyApiDemoApplication.class, args);
 	}
 }
