@@ -38,11 +38,8 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "productId=" + productId +
-                ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                '}';
+        return "[" + productId + "] Name: " + name +
+                "\n\t> Category: " + category +
+                "\n\t> Price: $" + String.format("%.2f", price);
     }
 }

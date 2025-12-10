@@ -13,30 +13,41 @@ public class NorthwindApplication implements CommandLineRunner {
 
     @Override
     public void run(String[] args) {
-        System.out.print("""
-                --- Northwind Traders Spring Boot App ---
-                    [1] List Products
-                    [2] Add Product
-                > Enter choice:\s""");
+        boolean running = true;
         try (Scanner scnr = new Scanner(System.in)) {
-            String choice = scnr.nextLine().trim();
+            while (running) {
+                System.out.print("""
+                    
+                    -----------------------------------------
+                    |   Northwind Traders Spring Boot App   |
+                    -----------------------------------------
+                        [1] List Products
+                        [2] Add Product
+                        [3] Delete Product
+                        [X] Exit
+                    > Enter choice:\s""");
 
-            switch (choice) {
-                case "1" -> listProducts(productDao);
-                case "2" -> addProduct(productDao, scnr);
-                default -> System.out.println("Invalid choice.");
+                String choice = scnr.nextLine().trim().toLowerCase();
+
+                switch (choice) {
+                    case "1" -> listProducts(productDao);
+                    case "2" -> addProduct(productDao, scnr);
+                    case "3" -> deleteProduct(productDao, scnr);
+                    case "x" -> running = false;
+                    default -> System.out.println("Invalid choice.");
+                }
             }
         }
     }
 
-    private static void listProducts(ProductDao productDao) {
+    private void listProducts(ProductDao productDao) {
         System.out.println("\n--- All Products ---");
         for (Product p : productDao.getAll()) {
             System.out.println(p);
         }
     }
 
-    private static void addProduct(ProductDao productDao, Scanner scnr) {
+    private void addProduct(ProductDao productDao, Scanner scnr) {
         System.out.println("\n--- Add New Product ---");
 
         boolean valid = false;
@@ -80,6 +91,20 @@ public class NorthwindApplication implements CommandLineRunner {
         productDao.add(newProduct);
 
         System.out.printf("Successfully added product: %s%n", newProduct.getName());
+    }
+
+    private void deleteProduct(ProductDao productDao, Scanner scnr) {
+        System.out.println("\n--- Delete Product ---");
+        System.out.print("Enter product ID: ");
+
+        try {
+            int productId = Integer.parseInt(scnr.nextLine());
+            productDao.delete(productId);
+        }
+        catch (NumberFormatException e) {
+            System.out.println("ID must be an integer.");
+        }
+
     }
 
 }

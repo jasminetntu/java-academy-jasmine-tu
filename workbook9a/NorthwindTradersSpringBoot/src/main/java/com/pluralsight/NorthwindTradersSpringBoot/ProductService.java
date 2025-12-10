@@ -6,21 +6,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
-    private final SimpleProductDao simpleProductDao;
+    private final JdbcProductDao jdbcProductDao;
 
     @Autowired
-    public ProductService(SimpleProductDao simpleProductDao) {
-        this.simpleProductDao = simpleProductDao;
+    public ProductService(JdbcProductDao jdbcProductDao) {
+        this.jdbcProductDao = jdbcProductDao;
     }
 
     private void listProducts() {
-        for (Product p : simpleProductDao.getAll()) {
+        for (Product p : jdbcProductDao.getAll()) {
             System.out.println(p);
         }
     }
 
     private void addProduct(Product product) {
-        simpleProductDao.add(product);
+        jdbcProductDao.add(product);
     }
 
 }
