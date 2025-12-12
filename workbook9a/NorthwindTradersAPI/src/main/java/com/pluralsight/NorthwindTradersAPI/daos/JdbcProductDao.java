@@ -120,4 +120,22 @@ public class JdbcProductDao implements ProductDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void delete(int id) {
+        String sql = """
+                DELETE FROM northwind.products
+                WHERE productId = ?;""";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println("Something went wrong when deleting product.");
+            e.printStackTrace();
+        }
+    }
 }

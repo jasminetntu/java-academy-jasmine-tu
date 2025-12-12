@@ -111,4 +111,22 @@ public class JdbcCategoryDao implements CategoryDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void delete(int id) {
+        String sql = """
+                DELETE FROM northwind.categories
+                WHERE categoryId = ?;""";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println("Something went wrong when deleting category.");
+            e.printStackTrace();
+        }
+    }
 }
